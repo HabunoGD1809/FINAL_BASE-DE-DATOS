@@ -119,17 +119,14 @@ BEGIN
     
     OPEN cursorMedicos
     
-    -- Obtener la siguiente fila del cursor
     FETCH NEXT FROM cursorMedicos INTO @idClinica, @idMedico, @cantidad
     
-    -- Loop a trav�s de las filas del cursor
     WHILE @@FETCH_STATUS = 0
     BEGIN
         -- Insertar la cantidad de consultas del m�dico en la cl�nica en la tabla Historia
         INSERT INTO Historia (ClinicaAfiliadaID, MedicoID, Cantidad)
         VALUES (@idClinica, @idMedico, @cantidad)
         
-        -- Obtener la siguiente fila del cursor
         FETCH NEXT FROM cursorMedicos INTO @idClinica, @idMedico, @cantidad
     END
     
@@ -162,7 +159,7 @@ END;
 
 --Test TotalMedicosPorClinica
 GO
-DECLARE @ClinicaAfiliadaID INT = 4; -- Reemplaza con el ID de la cl�nica deseada
+DECLARE @ClinicaAfiliadaID INT = 4; 
 
 SELECT ca.Nombre AS NombreClinica, dbo.TotalMedicosPorClinica(@ClinicaAfiliadaID) AS TotalMedicos
 FROM ClinicaAfiliada ca
@@ -189,7 +186,6 @@ SELECT p.Nombre AS Nombre_Paciente, p.Diagnostico AS Diagnostico,
 p.FechaDiagnostico AS Fecha_Diagnostico
 FROM Paciente p
 WHERE p.FechaDiagnostico BETWEEN '2023-03-01' AND '2023-04-03';
-
 
 
 -- M�dicos que ingresaron al centro este a�o
